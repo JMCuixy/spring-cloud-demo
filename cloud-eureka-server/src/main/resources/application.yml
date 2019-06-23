@@ -4,9 +4,12 @@ server:
 eureka:
   instance:
     hostname: 127.0.0.1
+    prefer-ip-address: true
   client:
     # 不向注册中心注册自己
     register-with-eureka: false
     # 注册中心的职责是维护实例，不需要去检索服务
     fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 

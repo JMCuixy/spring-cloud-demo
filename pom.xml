@@ -13,6 +13,8 @@
 
     <modules>
         <module>cloud-eureka-server</module>
+
+        <module>cloud-demo</module>
     </modules>
 
     <parent>
