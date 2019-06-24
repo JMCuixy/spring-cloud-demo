@@ -1,0 +1,13 @@
+server:
+  port: 2224
+
+spring:
+  application:
+    name: cloud-ribbon-consumer
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+  instance:
+    prefer-ip-address: true

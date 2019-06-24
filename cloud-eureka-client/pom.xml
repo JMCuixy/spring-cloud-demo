@@ -10,8 +10,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.cloud.demo</groupId>
-    <artifactId>cloud-demo</artifactId>
+    <groupId>com.cloud.demo.eureka.client</groupId>
+    <artifactId>cloud-eureka-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>

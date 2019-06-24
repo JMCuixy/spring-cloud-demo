@@ -1,4 +1,4 @@
-package com.cloud.demo.controller;
+package com.cloud.demo.eureka.client.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
