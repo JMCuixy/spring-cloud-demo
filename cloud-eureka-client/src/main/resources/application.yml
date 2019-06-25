@@ -1,13 +1,56 @@
 server:
   port: 2222
-
 spring:
   application:
     name: cloud-eureka-client
-
 eureka:
+  # 服务注册相关的配置信息
   client:
+    # 设置 region
+    region: default
+    # 设置 zones，以逗号分隔
+    availability-zones: defaultZone
     service-url:
-      defaultZone: http://localhost:1111/eureka/
+      defaultZone: http://user:password@localhost:1111/eureka/
+    # 启用 Eureka 客户端
+    enabled: true
+    # 从 Eureka 服务端获取注册信息的间隔时间，单位为秒
+    registry-fetch-interval-seconds: 30
+    # 更新实例信息的变化到 Eureka 服务端的间隔时间，单位为秒
+    instance-info-replication-interval-seconds: 30
+    # 初始化实例信息到 Eureka 服务端的间隔时间， 单位为秒
+    initial-instance-info-replication-interval-seconds: 40
+    # 轮询Eureka服务端地址更改的间隔时间， 单位为秒。 当我们与Spring Cloud Config配合，动态刷新 Eureka 的 serv1ceURL 地址时需要关注该参数
+    eureka-service-url-poll-interval-seconds: 300
+    # 读取 Eureka Server 信息的超时时间，单位为秒
+    eureka-server-read-timeout-seconds: 8
+    # 连接 Eureka Server 的超时时间，单位为秒
+    eureka-server-connect-timeout-seconds: 5
+    # 从 Eureka 客户端到所有Eureka服务端的连接总数
+    eureka-server-total-connections: 200
+    # 从 Eureka 客户端到每个Eureka服务端主机的连接总数
+    eureka-server-total-connections-per-host: 50
+    # Eureka服务端 连接的空闲关闭时间， 单位为秒
+    eureka-connection-idle-timeout-seconds: 30
+    # 心跳连接池的初始化线程数
+    heartbeat-executor-thread-pool-size: 2
+    # 心跳超时重试延迟时间的最大乘数值
+    heartbeat-executor-exponential-back-off-bound: 10
+    # 缓存刷新线程池的初始化线程数
+    cache-refresh-executor-thread-pool-size: 2
+    # 缓存刷新重试延迟时间的最大乘数值
+    cache-refresh-executor-exponential-back-off-bound: 10
+    # 使用DNS来获取 Eureka服务端的 serviceUri
+    use-dns-for-fetching-service-urls: false
+    # 是否要将自身的实例信息 注册到Eureka服务端
+    register-with-eureka: true
+    # 是否偏好使用处于相同Zone的Eureka服务端
+    prefer-same-zone-eureka: true
+    # 获取实例 时是否过滤， 仅保留UP状态的实例
+    filter-only-up-instances: true
+    # 是否从Eureka服务端获取注册信息
+    fetch-registry: true
+  # 服务实例相关的配置信息
   instance:
     prefer-ip-address: true
+

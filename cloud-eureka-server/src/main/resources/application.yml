@@ -1,15 +1,28 @@
 server:
   port: 1111
 
+spring:
+  security:
+    user:
+      name: user
+      password: password
+
 eureka:
   instance:
     hostname: localhost
     prefer-ip-address: true
+    # 心跳时间（服务续约时间），默认是 30s
+    lease-renewal-interval-in-seconds: 30
+    # 服务失效时间， 默认是 90s
+    lease-expiration-duration-in-seconds: 90
   client:
     # 不向注册中心注册自己
     register-with-eureka: false
     # 注册中心的职责是维护实例，不需要去检索服务
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+  # 是否要打开自我保护机制
+  server:
+    enable-self-preservation: false
 
