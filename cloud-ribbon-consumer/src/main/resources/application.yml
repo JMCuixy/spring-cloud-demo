@@ -9,9 +9,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://user:password@localhost:1111/eureka/
-    # consumer 允许获取服务， 默认为 true
-    fetch-registry: true
-    # 服务清单的缓存时间，默认是 30s
     registry-fetch-interval-seconds: 30
   instance:
     prefer-ip-address: true

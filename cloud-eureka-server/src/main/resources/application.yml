@@ -7,22 +7,28 @@ spring:
       name: user
       password: password
 
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+    enabled-by-default: true
+
 eureka:
   instance:
     hostname: localhost
     prefer-ip-address: true
-    # 心跳时间（服务续约时间），默认是 30s
-    lease-renewal-interval-in-seconds: 30
-    # 服务失效时间， 默认是 90s
-    lease-expiration-duration-in-seconds: 90
+    # 状态页
+    status-page-url-path: ${management.endpoints.web.base-path}/info
+    # 健康检查
+    health-check-url-path: ${management.endpoints.web.base-path}/health
   client:
     # 不向注册中心注册自己
     register-with-eureka: false
     # 注册中心的职责是维护实例，不需要去检索服务
     fetch-registry: false
+
     service-url:
       defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
   # 是否要打开自我保护机制
   server:
     enable-self-preservation: false
-
