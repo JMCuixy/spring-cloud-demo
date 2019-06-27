@@ -31,4 +31,4 @@ eureka:
       defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
   # 是否要打开自我保护机制
   server:
-    enable-self-preservation: false
+    enable-self-preservation: true
