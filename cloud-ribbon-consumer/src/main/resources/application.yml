@@ -4,6 +4,30 @@ server:
 spring:
   application:
     name: cloud-ribbon-consumer
+  cloud:
+    loadbalancer:
+      retry:
+        # 开启重试机制
+        enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+
+#  <client>.ribbon.listOfServers
+# 1. 参数都可在 CommonClientConfigKey.java 找到
+# 2. 配置 PropertiesFactory 里面的参数可重写默认的负载均衡策略
+
+cloud-ribbon-consumer:
+  ribbon:
+    # 连接超时
+    ConnectTimeout: 250
+    # 处理超时
+    ReadTimeout: 1000
+    # 对所有操作请求都进行重试
+    OkToRetryOnAllOperations: true
+    # 切换实例的重试次数
+    MaxAutoRetriesNextServer: 1
 
 eureka:
   client:
@@ -12,3 +36,4 @@ eureka:
     registry-fetch-interval-seconds: 30
   instance:
     prefer-ip-address: true
+
