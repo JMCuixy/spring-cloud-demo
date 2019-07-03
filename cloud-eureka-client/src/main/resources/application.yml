@@ -15,6 +15,9 @@ eureka:
       default: defaultZone
     service-url:
       defaultZone: http://user:password@localhost:1111/eureka/
+    # 开启健康检查（依赖spring-boot-starter-actuator）
+    healthcheck:
+      enabled: true
     # 启用 Eureka 客户端
     enabled: true
     # 从 Eureka 服务端获取注册信息的间隔时间，单位为秒 （服务清单的缓存时间，默认是 30s）
@@ -65,7 +68,7 @@ eureka:
     # 设置 instanceId，默认是 ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance—id:${server.port}}
     # instance-id: ${spring.application.name}
     # 非安全的通信端口号
-    non-secure-port: 80
+    non-secure-port: ${server.port}
     # 是否启用非安全通信
     non-secure-port-enabled: true
     # 安全的通信端口号
