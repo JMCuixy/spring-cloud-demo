@@ -19,32 +19,39 @@ public class Demo1 {
 
             @Override
             public void call(Subscriber<? super String> subscriber) {
+                // 这里放入同步或者异步请求
                 subscriber.onNext("Hello RxJava");
                 subscriber.onNext("JMCui");
+                // 通过调用 Subscriber.onCompleted() 或者 Subscriber.onError() 来结束该事件的操作流,二者是互斥的，只能调用一个
                 subscriber.onCompleted();
             }
         });
 
+
         Subscriber<String> subscriber = new Subscriber<String>() {
 
+            // 队列事件完结。当不会有新的 omNext() 发出时，需要触发 onCompleted() 方法作为标志。
             @Override
             public void onCompleted() {
 
             }
 
+            // 队列事件异常时触发。队列自动终止，不允许再有事件发生。
             @Override
             public void onError(Throwable e) {
 
             }
 
+
             @Override
             public void onNext(String s) {
+                // 这里获取结果
                 System.out.println("Subscriber:" + s);
             }
         };
 
         // 订阅
+        // 通过subscribe()方法订阅后，生产者中的方法被执行
         observable.subscribe(subscriber);
-
     }
 }
