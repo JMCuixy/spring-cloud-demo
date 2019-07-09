@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author : cuixiuyin
@@ -43,4 +43,6 @@ public class HelloController {
         logger.info("/hello, host:" + instance.getHost() + ", serviceId:" + instance.getServiceId());
         return "Hello World";
     }
+
+
 }

@@ -36,4 +36,3 @@ eureka:
     registry-fetch-interval-seconds: 30
   instance:
     prefer-ip-address: true
-

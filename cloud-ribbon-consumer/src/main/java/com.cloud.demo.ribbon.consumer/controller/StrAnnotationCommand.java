@@ -1,6 +1,8 @@
 package com.cloud.demo.ribbon.consumer.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,11 @@ public class StrAnnotationCommand {
     // 1. @HystrixCommand 注解相当于新建的 StrCommand 类
     // 2. groupKey 默认是类名，commandKey 默认是方法名 ，threadPoolKey 默认和 groupKey 一致
     @HystrixCommand(fallbackMethod = "fallbackMethod", groupKey = "strGroupCommand", commandKey = "strCommand", threadPoolKey = "strThreadPool")
+
+    // 1. @CacheResult 用来标记请求结果应该被缓存，必须与 @HystrixCommand 一起使用
+    // 2. @CacheKey 用来修饰方法参数，表示缓存的 key 名/
+    // 3.@CacheRemove 用来标记请求结果的缓存失效
+    @CacheResult(cacheKeyMethod = "getCacheKey")
     public String strConsumer() {
         ResponseEntity<String> result = restTemplate.getForEntity("http://cloud-eureka-client/hello", String.class);
         return result.getBody();
@@ -30,6 +37,7 @@ public class StrAnnotationCommand {
 
     // ignoreExceptions 表示抛出该异常时不走降级回调逻辑
     @HystrixCommand(fallbackMethod = "fallbackMethod", ignoreExceptions = {IllegalAccessException.class})
+    @CacheRemove(commandKey = "asyncStrConsumer")
     public Future<String> asyncStrConsumer() {
 
         Future<String> asyncResult = new AsyncResult<String>() {
@@ -53,5 +61,9 @@ public class StrAnnotationCommand {
                 return "fallback return";
             }
         };
+    }
+
+    public String getCacheKey(){
+        return "";
     }
 }
