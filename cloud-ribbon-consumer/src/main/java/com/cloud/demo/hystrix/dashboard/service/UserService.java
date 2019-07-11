@@ -1,4 +1,4 @@
-package com.cloud.demo.ribbon.consumer.service;
+package com.cloud.demo.hystrix.dashboard.service;
 
 import java.util.List;
 import java.util.Set;

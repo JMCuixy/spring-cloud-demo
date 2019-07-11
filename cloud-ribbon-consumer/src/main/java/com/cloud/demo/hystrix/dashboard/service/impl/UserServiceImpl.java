@@ -1,6 +1,6 @@
-package com.cloud.demo.ribbon.consumer.service.impl;
+package com.cloud.demo.hystrix.dashboard.service.impl;
 
-import com.cloud.demo.ribbon.consumer.service.UserService;
+import com.cloud.demo.hystrix.dashboard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

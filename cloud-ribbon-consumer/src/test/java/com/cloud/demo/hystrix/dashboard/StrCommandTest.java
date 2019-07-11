@@ -1,7 +1,7 @@
-package com.cloud.demo.ribbon.consumer;
+package com.cloud.demo.hystrix.dashboard;
 
-import com.cloud.demo.ribbon.consumer.controller.StrCommand;
-import com.cloud.demo.ribbon.consumer.controller.StrObservableCommand;
+import com.cloud.demo.hystrix.dashboard.controller.StrObservableCommand;
+import com.cloud.demo.hystrix.dashboard.controller.StrCommand;
 import com.netflix.hystrix.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

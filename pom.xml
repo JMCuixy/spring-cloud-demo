@@ -15,6 +15,7 @@
         <module>cloud-eureka-server</module>
         <module>cloud-eureka-client</module>
         <module>cloud-ribbon-consumer</module>
+        <module>cloud-hystrix-dashboard</module>
     </modules>
 
     <parent>

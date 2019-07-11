@@ -1,4 +1,4 @@
-package com.cloud.demo.ribbon.consumer.rxjava;
+package com.cloud.demo.hystrix.dashboard.rxjava;
 
 import rx.Observable;
 import rx.Subscription;

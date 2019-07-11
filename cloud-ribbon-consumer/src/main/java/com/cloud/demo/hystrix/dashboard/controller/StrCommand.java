@@ -1,4 +1,4 @@
-package com.cloud.demo.ribbon.consumer.controller;
+package com.cloud.demo.hystrix.dashboard.controller;
 
 import com.netflix.hystrix.*;
 import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategyDefault;

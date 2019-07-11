@@ -1,0 +1,6 @@
+server:
+  port: 2226
+
+spring:
+  application:
+    name: cloud-hystrix-dashboard
