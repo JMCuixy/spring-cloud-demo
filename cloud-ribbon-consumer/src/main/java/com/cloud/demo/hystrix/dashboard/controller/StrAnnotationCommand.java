@@ -2,6 +2,7 @@ package com.cloud.demo.hystrix.dashboard.controller;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
@@ -98,12 +99,12 @@ public class StrAnnotationCommand {
                     @HystrixProperty(name = "coreSize", value = "10"),
                     // 该参数用来设置线程池的最大队列大小。当设置为 -1 时，线程池将使用 SynchronousQueue 实现的队列，否则将使用 LinkedBlockingQueue 实现的队列。
                     @HystrixProperty(name = "maxQueueSize", value = "-1"),
-                    // 该参数用来为队列设置拒绝闾值。 通过该参数， 即使队列没有达到最大值也能拒绝请求。
+                    // 该参数用来为队列设置拒绝阈值。 通过该参数， 即使队列没有达到最大值也能拒绝请求。
                     // 该参数主要是对 LinkedBlockingQueue 队列的补充,因为 LinkedBlockingQueue 队列不能动态修改它的对象大小，而通过该属性就可以调整拒绝请求的队列大小了。
                     @HystrixProperty(name = "queueSizeRejectionThreshold", value = "5"),
             }
     )
-    public String strConsumer() {
+    public String strConsumer(@CacheKey Long id) {
         ResponseEntity<String> result = restTemplate.getForEntity("http://cloud-eureka-client/hello", String.class);
         return result.getBody();
     }

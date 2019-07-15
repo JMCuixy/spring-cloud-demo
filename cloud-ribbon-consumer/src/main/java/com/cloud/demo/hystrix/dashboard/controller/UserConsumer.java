@@ -41,7 +41,7 @@ public class UserConsumer {
     /**
      * 通过 ids 批量获取用户信息接口
      *
-     * @param ids 以逗号分割的用户 id
+     * @param ids id 集合
      * @return
      */
     @HystrixCommand

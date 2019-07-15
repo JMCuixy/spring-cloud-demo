@@ -1,6 +1,7 @@
 package com.cloud.demo.hystrix.dashboard.controller;
 
 import com.cloud.demo.hystrix.dashboard.service.HelloService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

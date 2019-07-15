@@ -36,3 +36,10 @@ eureka:
     registry-fetch-interval-seconds: 30
   instance:
     prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启指定端点
+        include: 'hystrix.stream'
