@@ -17,6 +17,7 @@
         <module>cloud-ribbon-consumer</module>
         <module>cloud-hystrix-dashboard</module>
         <module>cloud-turbine</module>
+        <module>cloud-feign-consumer</module>
     </modules>
 
     <parent>

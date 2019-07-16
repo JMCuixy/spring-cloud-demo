@@ -26,7 +26,7 @@ eureka:
     instance-info-replication-interval-seconds: 30
     # 初始化实例信息到 Eureka 服务端的间隔时间， 单位为秒
     initial-instance-info-replication-interval-seconds: 40
-    # 轮询Eureka服务端地址更改的间隔时间， 单位为秒。 当我们与Spring Cloud Config配合，动态刷新 Eureka 的 serv1ceURL 地址时需要关注该参数
+    # 轮询Eureka服务端地址更改的间隔时间， 单位为秒。 当我们与Spring Cloud Config配合，动态刷新 Eureka 的 serviceURL 地址时需要关注该参数
     eureka-service-url-poll-interval-seconds: 300
     # 读取 Eureka Server 信息的超时时间，单位为秒
     eureka-server-read-timeout-seconds: 8
