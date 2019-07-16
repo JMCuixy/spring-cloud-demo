@@ -9,3 +9,50 @@ eureka:
   client:
     service-url:
       defaultZone: http://user:password@localhost:1111/eureka/
+
+# 1. Spring Cloud Feign 中的 Ribbon 配置
+# 全局配置
+ribbon:
+  ConnectTimeout: 500
+  # 我们需要让 Hystrix 的超时时间大于 Ribbon 的超时时间，否则 Hystrix 命令超时后，该命令直接熔断，重试机制就没有任何意义了。
+  ReadTimeout: 2000
+
+# 针对单个服务的 Ribbon 配置
+cloud-eureka-client:
+  ribbon:
+    MaxAutoRetries: 2
+
+
+
+
+# 2. Spring Cloud Feign 中的 Hystrix 配置
+# 默认情况下，Spring Cloud Feign 会为将所有 Feign 客户端的方法都封装到 Hystrix 命令中进行服务保护
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    # 开启请求和响应的压缩功能
+    request:
+      enabled: true
+      # 超过 2M 才开始压缩
+      min-request-size: 2048
+      # 压缩类型
+      mime-types: "text/xml", "application/xml", "application/json"
+    response:
+      enabled: true
+
+# 配置全局的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutinMilliseconds: 5000
+
+    # 针对某个 commandKey 做配置，而 commandKey 默认取得是客户端中的方法名作为标识。所以如果存在相同方法名会共用配置。
+    hello:
+      execution:
+        isolation:
+          thread:
+            timeoutinMilliseconds: 5000
