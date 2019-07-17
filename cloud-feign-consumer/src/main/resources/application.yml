@@ -5,6 +5,7 @@ spring:
   application:
     name: cloud-feign-consumer
 
+
 eureka:
   client:
     service-url:
@@ -22,9 +23,6 @@ cloud-eureka-client:
   ribbon:
     MaxAutoRetries: 2
 
-
-
-
 # 2. Spring Cloud Feign 中的 Hystrix 配置
 # 默认情况下，Spring Cloud Feign 会为将所有 Feign 客户端的方法都封装到 Hystrix 命令中进行服务保护
 feign:
@@ -37,9 +35,11 @@ feign:
       # 超过 2M 才开始压缩
       min-request-size: 2048
       # 压缩类型
-      mime-types: "text/xml", "application/xml", "application/json"
+      mime-types: {"text/xml", "application/xml", "application/json"}
     response:
       enabled: true
+
+
 
 # 配置全局的超时时间
 hystrix:
@@ -56,3 +56,6 @@ hystrix:
         isolation:
           thread:
             timeoutinMilliseconds: 5000
+logging:
+  level:
+    com.cloud.demo.feign.service.FeignService: debug
