@@ -18,6 +18,7 @@
         <module>cloud-hystrix-dashboard</module>
         <module>cloud-turbine</module>
         <module>cloud-feign-consumer</module>
+        <module>cloud-zuul</module>
     </modules>
 
     <parent>

@@ -1,0 +1,40 @@
+server:
+  port: 5555
+
+spring:
+  application:
+    name: cloud-zuul
+
+# 为 Spring Cloud Zuul构建的 API 网关服务引入 Spring Cloud Eureka之后，它为 Eureka 中的每个服务都自动创建一个默认路由规则，
+# 这些默认规则的 path 会使用 serviceId 配置的服务名作为请求前缀
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/
+zuul:
+  routes:
+    client-1:
+      # ?:匹配任意单个数量字符；*：匹配任意多个数量字符；**：匹配任意多个数量字符，支持多级目录
+      path: /client-1/**
+      url: http://localhost:2222/
+      # 敏感头信息设置为空，表示不过滤敏感头信息，允许敏感头信息渗透到下游服务器
+      sensitiveHeaders: ""
+      customSensitiveHeaders: true
+    client-2:
+      path: /client-2/**
+      serviceId: cloud-eureka-client
+    # zuul.routes.<serviceid> = <path>
+    cloud-eureka-client: /client-3/**
+    client-4:
+      path: /client-4/**
+      # 请求转发 —— 仅限转发到本地接口
+      url: forward:/local
+
+  # Zuul 将对所有的服务都不自动创建路由规则
+  ignored-services: "*"
+  # 对某些 url 设置不经过路由选择
+  ignored-patterns: {"/**/world/**","/**/zuul/**"}
+  # Spring Cloud Zuul在请求路由时，会过滤掉 HTTP 请求头（Cookie、Set-Cookie、Authorization）信息中的一些敏感信息，
+  sensitive-headers: {"Cookie", "Set-Cookie", "Authorization"}
+  # 网关在进行路由转发时为请求设置 Host 头信息（保持 host 头信息不变）
+  add-host-header: true
