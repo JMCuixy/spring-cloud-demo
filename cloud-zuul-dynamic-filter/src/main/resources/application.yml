@@ -1,0 +1,17 @@
+server:
+  port: 7777
+
+spring:
+  application:
+    name: cloud-zuul-dynamic-filter
+
+zuul:
+  routes:
+    client:
+      path: /client/**
+      serviceId: cloud-eureka-client
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/

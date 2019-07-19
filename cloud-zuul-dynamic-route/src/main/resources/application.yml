@@ -1,0 +1,15 @@
+server:
+  port: 6666
+
+spring:
+  application:
+    name: cloud-zuul-dynamic-route
+
+  cloud:
+    config:
+      uri: http://localhost:7001/
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/

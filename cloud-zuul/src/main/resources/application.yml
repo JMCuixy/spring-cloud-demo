@@ -15,6 +15,7 @@ zuul:
   routes:
     client-1:
       # ?:匹配任意单个数量字符；*：匹配任意多个数量字符；**：匹配任意多个数量字符，支持多级目录
+      # 使用 url 的配置没有线程隔离和断路器的自我保护功能，不推荐使用
       path: /client-1/**
       url: http://localhost:2222/
       # 敏感头信息设置为空，表示不过滤敏感头信息，允许敏感头信息渗透到下游服务器
@@ -38,3 +39,33 @@ zuul:
   sensitive-headers: {"Cookie", "Set-Cookie", "Authorization"}
   # 网关在进行路由转发时为请求设置 Host 头信息（保持 host 头信息不变）
   add-host-header: true
+  # 请求转发时加上 X-Forwarded-*头域
+  add-proxy-headers: true
+  # 是否开启重试，默认关闭
+  retryable: true
+  # 通过 /zuul 路径访问的请求会绕过 dispatcherServlet, 被 Zuu1Servlet 处理，主要用来应对处理大文件上传的情况。
+  servlet-path: /zuul
+  # 禁用某个过滤器 zuul.<SimpleClassName>.<filterTye>.disable=true
+  TokenFilter:
+    pre:
+      disable: true
+
+
+# 该参数可以用来设置 API 网关中路由转发请求的 HystrixCommand 执行超时时间，单位为毫秒。
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutinMilliseconds: 5000
+
+ribbon:
+  # 该参数用来设置路由转发请求的时候，创建请求连接的超时时间。
+  ConnectTimeout: 500
+  # 该参数用来设置路由转发请求的超时时间。
+  ReadTimeout: 2000
+  # 最大自动重试次数
+  MaxAutoRetries: 1
+  # 最大自动重试下一个服务的次数
+  MaxAutoRetriesNextServer: 1

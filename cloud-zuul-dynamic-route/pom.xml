@@ -10,8 +10,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.cloud.demo.zuul</groupId>
-    <artifactId>cloud-zuul</artifactId>
+    <groupId>com.cloud.demo.zuul.dynamic.route</groupId>
+    <artifactId>cloud-zuul-dynamic-route</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
@@ -19,18 +19,15 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-
-        <!--引入 spring-retry，ribbon 的重试机制才生效-->
         <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
     </dependencies>
 
-
+    
 </project>
