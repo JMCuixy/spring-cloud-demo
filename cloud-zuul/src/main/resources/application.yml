@@ -37,7 +37,7 @@ zuul:
   ignored-patterns: {"/**/world/**","/**/zuul/**"}
   # Spring Cloud Zuul在请求路由时，会过滤掉 HTTP 请求头（Cookie、Set-Cookie、Authorization）信息中的一些敏感信息，
   sensitive-headers: {"Cookie", "Set-Cookie", "Authorization"}
-  # 网关在进行路由转发时为请求设置 Host 头信息（保持 host 头信息不变）
+  # 网关在进行路由转发时为请求设置 Host 头信息（保持在路由转发过程中 host 头信息不变）
   add-host-header: true
   # 请求转发时加上 X-Forwarded-*头域
   add-proxy-headers: true

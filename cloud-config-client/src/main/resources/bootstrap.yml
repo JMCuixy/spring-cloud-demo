@@ -1,0 +1,41 @@
+# bootstrap 配置会系统会优先加载；加载优先级比 application高
+spring:
+  application:
+    # 对应配置文件规则中的 {application} 部分
+    name: env
+  cloud:
+    config:
+      name: env
+      # uri: http://localhost:7001
+      discovery:
+        enabled: true
+        service-id: cloud-config-server
+      profile: default
+      label: master
+      username: user
+      password: password
+      # 快速失败响应（当发现 config-server 连接失败时，就不做连接的准备工作，直接返回失败）
+      fail-fast: true
+      # 失败重试
+      retry:
+        # 初始重试间隔时间，毫秒
+        initial-interval: 1000
+        # 下一间隔的乘数
+        multiplier: 1.1
+        # 最大间隔时间
+        max-interval: 2000
+        # 最多重试次数
+        max-attempts: 6
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开启指定端点
+        include: 'refresh'
+

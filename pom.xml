@@ -21,6 +21,8 @@
         <module>cloud-zuul</module>
         <module>cloud-zuul-dynamic-route</module>
         <module>cloud-zuul-dynamic-filter</module>
+        <module>cloud-config-server</module>
+        <module>cloud-config-client</module>
     </modules>
 
     <parent>

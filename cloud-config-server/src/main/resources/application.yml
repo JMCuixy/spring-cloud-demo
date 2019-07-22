@@ -1,0 +1,58 @@
+server:
+  port: 7001
+
+spring:
+  application:
+    name: cloud-config-server
+
+  # 配置完成后可访问的 url 如下，比如：http://localhost:7001/env/default
+  # /{application}/{profile} [/{label}]
+  # /{application}-{profile}.yml
+  # /{label}/{application}-{profile}.yml
+  # /{application}-{profile}.properties
+  # /{label}/{application}-{profile}.properties
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/JMCuixy/cloud-config-server.git
+          search-paths: config-repo
+        # 访问 http://localhost:7001/actuator/health 可以获取配置中心健康中心
+        health:
+          repositories:
+            env:
+              name: env
+              profiles: default
+              label: master
+            env-dev:
+              name: env-dev
+              profiles: dev
+              label: master
+            env-test:
+              name: env-test
+              profiles: test
+              label: master
+            env-prod:
+              name: env-prod
+              profiles: prod
+              label: master
+      username: user
+      password: password
+  # 提供 security 保护
+  security:
+    user:
+      name: user
+      password: password
+
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/
+
+

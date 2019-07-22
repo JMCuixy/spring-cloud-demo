@@ -1,0 +1,9 @@
+server:
+  port: 7002
+
+spring:
+  application:
+    name: cloud-config-client
+
+
+
