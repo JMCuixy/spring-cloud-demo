@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: env
+
+  cloud:
+    config:
+      name: env
+      discovery:
+        enabled: true
+        service-id: cloud-config-server
+      label: master
+      profile: default
+      username: user
+      password: password
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: routes,refresh
+

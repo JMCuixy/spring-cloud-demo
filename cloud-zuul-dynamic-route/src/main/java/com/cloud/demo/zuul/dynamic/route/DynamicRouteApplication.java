@@ -3,19 +3,14 @@ package com.cloud.demo.zuul.dynamic.route;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
-/**
- * 1. 作为系统的统一入口，屏蔽了系统内部各个微服务的细节。
- * 2. 可以与服务治理框架相结合，实现自动化的服务实例维护以及负载均衡的路由转发。
- * 3. 可以实现接口权限校验与微服务业务逻辑的解耦
- *
- * @author : cuixiuyin
- * @date : 2019/6/23
- */
 
 // 开启 Zuul 的Api 网关服务功能
 @EnableZuulProxy
@@ -28,9 +23,17 @@ public class DynamicRouteApplication {
     }
 
 
-    // 该注解来使 zuul 的配置内容动态化
+    /**
+     * 刷新地址：POST http://127.0.0.1:5006/actuator/refresh
+     * 路由查看地址：GET http://127.0.0.1:5006/actuator/routes
+     *
+     * @return
+     */
+    @Bean
+    @Primary
+    //该注解来使 zuul 的配置内容动态化
     @RefreshScope
-    @ConfigurationProperties("zuul")
+    @ConfigurationProperties(prefix = "zuul")
     public ZuulProperties zuulProperties() {
         return new ZuulProperties();
     }
