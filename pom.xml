@@ -23,6 +23,7 @@
         <module>cloud-zuul-dynamic-filter</module>
         <module>cloud-config-server</module>
         <module>cloud-config-client</module>
+        <module>cloud-gateway</module>
     </modules>
 
     <parent>

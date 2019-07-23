@@ -1,0 +1,43 @@
+server:
+  port: 7777
+
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      # 配置 cors 跨域
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - HEAD
+              - POST
+      routes:
+        - id: cloud-eureka-client
+          uri: http://localhost:2222
+          order: 0
+          predicates:
+            - Path=/client/**
+          filters:
+            - StripPrefix=1
+            #　配置熔断
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 2000
+
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        # 开启指定端点
+        include: gateway
