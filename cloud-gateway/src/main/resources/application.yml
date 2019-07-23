@@ -31,7 +31,6 @@ spring:
 
 hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 2000
 
-
 management:
   endpoint:
     gateway:
@@ -40,4 +39,11 @@ management:
     web:
       exposure:
         # 开启指定端点
+        # http://127.0.0.1:7777/actuator/gateway/routes 查看路由列表
         include: gateway
+
+nacos:
+  address: 127.0.0.1:8848
+  data-id: DHAP_GATEWAY
+  group-id: DEFAULT_GROUP
+  timeout: 5000
