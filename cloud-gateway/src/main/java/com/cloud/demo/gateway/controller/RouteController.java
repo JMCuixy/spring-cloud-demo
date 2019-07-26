@@ -17,6 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * gateway 默认内置了创建动态路由的接口：
+ * 要创建一个路由，发送POST请求 /gateway/routes/{id_route_to_create}，参数为JSON结构，具体参数数据结构：
+ * {
+ *   "id": "first_route",
+ *   "predicates": [{
+ *     "name": "Path",
+ *     "args": {"_genkey_0":"/first"}
+ *   }],
+ *   "filters": [],
+ *   "uri": "http://www.uri-destination.org",
+ *   "order": 0
+ * }]
+ * 要删除一个路由，发送 DELETE请求 /gateway/routes/{id_route_to_delete}
+ *
  * 动态路由管理
  */
 @RestController

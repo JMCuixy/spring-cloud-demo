@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -22,13 +23,13 @@ import java.util.Map;
  * @date : 2019/7/23
  */
 @Component
-public class AuthFilter implements GlobalFilter {
+public class AuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         MultiValueMap<String, String> queryParams = request.getQueryParams();
-        if (queryParams == null || StringUtils.isEmpty(queryParams.getFirst("token"))){
+        if (queryParams == null || StringUtils.isEmpty(queryParams.getFirst("token"))) {
 
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("code", "401");
@@ -46,5 +47,16 @@ public class AuthFilter implements GlobalFilter {
             return response.writeWith(Mono.just(buffer));
         }
         return chain.filter(exchange);
+    }
+
+
+    /**
+     * 过滤器的执行顺序是从小到大执行，较高的值被解释为较低的优先级。
+     *
+     * @return
+     */
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }

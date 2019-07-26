@@ -4,8 +4,23 @@ server:
 spring:
   application:
     name: cloud-gateway
+  redis:
+    host: dev1.yungu-link.com
+    timeout: 3000
+    password: Yungu123*
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 4
   cloud:
     gateway:
+      enabled: true
+      metrics:
+        enabled: true
+      # 将网关配置为基于使用兼容 DiscoveryClient 注册中心注册的服务来创建路由
+      discovery:
+        locator:
+          enabled: true
       # 配置 cors 跨域
       globalcors:
         corsConfigurations:
@@ -17,19 +32,57 @@ spring:
               - POST
       routes:
         - id: cloud-eureka-client
-          uri: http://localhost:2222
+          # uri: http://localhost:2222
+          uri: lb://cloud-eureka-client
           order: 0
           predicates:
             - Path=/client/**
           filters:
+            # parts 参数指示在将请求发送到下游之前，要从请求中去除的路径中的节数。比如我们访问 /client/hello，调用的时候变成 http://localhost:2222/hello
             - StripPrefix=1
-            #　配置熔断
+            #配置熔断
             - name: Hystrix
               args:
                 name: fallbackcmd
                 fallbackUri: forward:/fallback
+            - name: FallbackHeaders
+              args:
+                executionExceptionTypeHeaderName: test-header
+            # 限流器
+            # 这定义了每个用户 10 个请求的限制。允许 20 个突发，但下一秒只有 10 个请求可用。
+            - name: RequestRateLimiter
+              args:
+                # 允许用户每秒执行多少请求（令牌桶的填充速率）
+                redis-rate-limiter.replenishRate: 10
+                # 允许用户在一秒内执行的最大请求数。（令牌桶可以保存的令牌数）。将此值设置为零将阻止所有请求。
+                redis-rate-limiter.burstCapacity: 20
+            - SaveSession
+            # 重试过滤器（ retry filter 不支持 body 请求的重试，如通过 body 的 POST 或 PUT请求）
+            # retries: 应尝试的重试次数
+            # statuses: 应该重试的 HTTP 状态码，用 org.springframework.http.HttpStatus 标识
+            # methods: 应该重试的 HTTP 方法，用 org.springframework.http.HttpMethod 标识
+            # series: 要重试的一系列状态码，用 org.springframework.http.HttpStatus.Series 标识
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_GATEWAY
+            # 请求大小限制
+            - name: RequestSize
+              args:
+                maxSize: 5000000
+            - name:
+        - id: websocket service
+          # uri: ws://localhost:3001
+          uri: lb:ws://serviceid
+          predicates:
+            - Path=/websocket/**
 
 hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 2000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:password@localhost:1111/eureka/
 
 management:
   endpoint:
@@ -40,7 +93,11 @@ management:
       exposure:
         # 开启指定端点
         # http://127.0.0.1:7777/actuator/gateway/routes 查看路由列表
-        include: gateway
+        # /actuator/gateway/globalfilters 检索应用于所有路由的 [global filters]
+        # /actuator/gateway/routefilters 检索应用于路由的 [GatewayFilter factories]
+        # /actuator/gateway/refresh 清理路由缓存
+        # http://127.0.0.1:7777/actuator/metrics/gateway.requests 获得路由请求数据
+        include: gateway,metrics
 
 nacos:
   address: 127.0.0.1:8848
