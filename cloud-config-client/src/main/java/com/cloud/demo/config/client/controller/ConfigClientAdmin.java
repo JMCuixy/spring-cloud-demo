@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author : cuixiuyin
  * @date : 2019/7/21
  */
+//该注解来使配置内容动态化
 @RefreshScope
 @RestController
 public class ConfigClientAdmin {

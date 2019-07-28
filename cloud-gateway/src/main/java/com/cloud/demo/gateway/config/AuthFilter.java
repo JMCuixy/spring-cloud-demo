@@ -46,7 +46,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
             response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
             return response.writeWith(Mono.just(buffer));
         }
-        return chain.filter(exchange);
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            ServerHttpResponse response = exchange.getResponse();
+            //Manipulate the response in some way
+        }));
     }
 
 

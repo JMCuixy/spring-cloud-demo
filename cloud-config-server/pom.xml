@@ -20,6 +20,7 @@
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
 
+        <!--启动 security 保护，不需要可不添加-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>

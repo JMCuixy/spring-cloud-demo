@@ -3,12 +3,14 @@ package com.cloud.demo.gateway.config;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
  * @author : cuixiuyin
  * @date : 2019/7/26
  */
+@Component
 public class PostGatewayFilterFactory extends AbstractGatewayFilterFactory<PostGatewayFilterFactory.Config> {
 
     public PostGatewayFilterFactory() {

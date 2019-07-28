@@ -5,7 +5,7 @@ spring:
   application:
     name: cloud-gateway
   redis:
-    host: dev1.yungu-link.com
+    host: 127.0.0.1
     timeout: 3000
     password: Yungu123*
     jedis:
@@ -52,6 +52,8 @@ spring:
             # 这定义了每个用户 10 个请求的限制。允许 20 个突发，但下一秒只有 10 个请求可用。
             - name: RequestRateLimiter
               args:
+                # SPEL 表达式获取 Spring 中的 Bean，这个参数表示根据什么来限流
+                key-resolver: '#{@ipKeyResolver}'
                 # 允许用户每秒执行多少请求（令牌桶的填充速率）
                 redis-rate-limiter.replenishRate: 10
                 # 允许用户在一秒内执行的最大请求数。（令牌桶可以保存的令牌数）。将此值设置为零将阻止所有请求。
@@ -70,7 +72,6 @@ spring:
             - name: RequestSize
               args:
                 maxSize: 5000000
-            - name:
         - id: websocket service
           # uri: ws://localhost:3001
           uri: lb:ws://serviceid

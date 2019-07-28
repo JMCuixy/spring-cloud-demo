@@ -18,7 +18,7 @@ public class GatewayApplication {
 
 
     /**
-     * 限流：
+     * 限流的键定义：
      * <p>
      * 1. Spring Cloud Gateway 默认实现 Redis限流，如果扩展只需要实现 Ratelimter 接口即可。
      * 2. 可以通过自定义KeyResolver来指定限流的Key,比如我们需要根据用户、IP、URI来做限流等等，通过exchange对象可以获取到请求信息。

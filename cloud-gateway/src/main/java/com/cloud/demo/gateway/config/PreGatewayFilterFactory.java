@@ -3,11 +3,13 @@ package com.cloud.demo.gateway.config;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 
 /**
  * @author : cuixiuyin
  * @date : 2019/7/26
  */
+@Component
 public class PreGatewayFilterFactory extends AbstractGatewayFilterFactory<PreGatewayFilterFactory.Config> {
 
     public PreGatewayFilterFactory() {
@@ -30,5 +32,4 @@ public class PreGatewayFilterFactory extends AbstractGatewayFilterFactory<PreGat
     public static class Config {
         //Put the configuration properties for your filter here
     }
-
 }

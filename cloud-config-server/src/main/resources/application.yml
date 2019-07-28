@@ -13,11 +13,16 @@ spring:
   # /{label}/{application}-{profile}.properties
   cloud:
     config:
+      # 为配置中心提供安全保护
+      username: user
+      password: password
       server:
         git:
+          # 仓库地址
           uri: https://github.com/JMCuixy/cloud-config-server.git
+          # 搜索路径
           search-paths: config-repo
-        # 访问 http://localhost:7001/actuator/health 可以获取配置中心健康中心
+        # 访问 http://localhost:7001/actuator/health 可以获取配置中心健康指标
         health:
           repositories:
             env:
@@ -36,8 +41,7 @@ spring:
               name: env-prod
               profiles: prod
               label: master
-      username: user
-      password: password
+
   # 提供 security 保护
   security:
     user:

@@ -10,8 +10,11 @@ spring:
       discovery:
         enabled: true
         service-id: cloud-config-server
+      # 环境变量
       profile: default
+      # 分支
       label: master
+      # config Server 配置的安全信息
       username: user
       password: password
       # 快速失败响应（当发现 config-server 连接失败时，就不做连接的准备工作，直接返回失败）
@@ -37,5 +40,6 @@ management:
     web:
       exposure:
         # 开启指定端点
+        # 配置刷新地址：POST http://127.0.0.1:7002/actuator/refresh
         include: 'refresh'
 
