@@ -34,12 +34,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://user:password@localhost:1111/eureka/
-
-management:
-  endpoints:
-    web:
-      exposure:
-        # 开启指定端点
-        # 配置刷新地址：POST http://127.0.0.1:7002/actuator/refresh
-        include: 'refresh'
-

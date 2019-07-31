@@ -5,12 +5,6 @@ spring:
   application:
     name: cloud-zuul-dynamic-route
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://user:password@localhost:1111/eureka/
-
-
 management:
   endpoints:
     web:

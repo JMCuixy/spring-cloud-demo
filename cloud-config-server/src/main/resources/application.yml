@@ -4,7 +4,12 @@ server:
 spring:
   application:
     name: cloud-config-server
-
+ # RabbitMQ 配置 Spring Cloud Bus
+ #rabbitmq:
+ #  host: 127.0.0.1
+ #  port: 5672
+ #  username: admin
+ #  password: 123456
   # 配置完成后可访问的 url 如下，比如：http://localhost:7001/env/default
   # /{application}/{profile} [/{label}]
   # /{application}-{profile}.yml
@@ -13,15 +18,15 @@ spring:
   # /{label}/{application}-{profile}.properties
   cloud:
     config:
-      # 为配置中心提供安全保护
-      username: user
-      password: password
       server:
         git:
           # 仓库地址
           uri: https://github.com/JMCuixy/cloud-config-server.git
           # 搜索路径
           search-paths: config-repo
+        # 为配置中心提供安全保护
+        username: user
+        password: password
         # 访问 http://localhost:7001/actuator/health 可以获取配置中心健康指标
         health:
           repositories:
@@ -41,18 +46,24 @@ spring:
               name: env-prod
               profiles: prod
               label: master
-
-  # 提供 security 保护
-  security:
-    user:
-      name: user
-      password: password
-
+    # 配置消息总线自动刷新配置
+    bus:
+      enabled: true
+      # 开启跟踪总线事件
+      trace:
+        enabled: true
 management:
   endpoint:
     health:
       enabled: true
       show-details: always
+  endpoints:
+    web:
+      exposure:
+        # 执行 http://127.0.0.1:7001/actuator/bus-refresh，把配置内容修改的消息发布到服务总线。
+        # 客户端收到订阅消息，自动执行 /actuator/refresh，刷新配置
+        include: bus-refresh
+
 
 eureka:
   client:
