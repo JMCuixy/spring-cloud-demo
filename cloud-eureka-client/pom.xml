@@ -27,6 +27,34 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!--链路跟踪-->
+        <!--INFO [cloud-eureka-client,aca0fa7127ad06a9,177c1f1ce91ad526,false]
+            1. 第一个值 cloud-eureka-client 代表应用名称
+            2. 第二个至代表 TraceId
+            3. 第三个值代表 spanId
+            4. 第四个值代表表示是否要将该信息输出到 Zipkin 等服务中来收集和展示
+        -->
+        <!--
+            1. 通过诸如 RabbitMQ、Kafka(或者其他任何 Spring Cloud Stream 绑定器实现的消息中间件）传递的请求。
+            2. 通过 Zuul 代理传递的请求。
+            3. 通过 RestTemplate 发起的请求。
+        -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <!-- sleuth 与 logstash 整合 -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>6.1</version>
+        </dependency>
+        <!-- sleuth 与 zipkin 整合-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
     </dependencies>
-    
+
 </project>

@@ -1,0 +1,20 @@
+server:
+  port: 7787
+
+spring:
+  application:
+    name: cloud-stream
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+  cloud:
+    stream:
+      bindings:
+        input:
+          # 设置消费组，保证只有一个实例消费到消息
+          # 如果不设置消费组，Stream 将会为每个实例生成一个消费组
+          group: ${spring.application.name}
+
+

@@ -1,9 +1,15 @@
 server:
   port: 2222
 spring:
-  application:
-    name: cloud-eureka-client
-
+  sleuth:
+    sampler:
+      # 代表收集 100% 的请求跟踪信息
+      probability: 1
+  zipkin:
+    base-url: http://localhost:9411/
+    compression:
+      enabled: true
+    discovery-client-enabled: true
 
 eureka:
   # 服务注册相关的配置信息
