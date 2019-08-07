@@ -11,10 +11,39 @@ spring:
     password: 123456
   cloud:
     stream:
+      default-binder: rabbit
+      # 应用程序部署的实例数量
+      instance-count: 1
+      # 应用程序实例的索引，该值从0开始，最大值设置为 -1。
+      instance-index: 0
       bindings:
         input:
           # 设置消费组，保证只有一个实例消费到消息
           # 如果不设置消费组，Stream 将会为每个实例生成一个消费组
           group: ${spring.application.name}
+          # 指定了输入通道对应的主题名，不配置将使用 channel 名，多个以逗号分隔
+          destination: greeting
+          # 开启消费者分区功能
+          consumer:
+            partitioned: true
+          # 目前，Spring Cloud Stream中自带支持了以下几种常用的消息类型转换。
+          # 1. JSON 与 POJO 的互相转换。
+          # 2. JSON与 org.springfrarework.tuple.Tuple 的互相转换
+          # 3. Object 与 byte[] 的互相转换
+          # 4. String 与 byte[] 的互相转换
+          # 5. Object 向纯文本的转换：Object需要实现toString()方法。
+          contentType: application/json
+          binder: rabbit
+
+        output:
+          # 指定输出通道的绑定目标
+          destination: greeting
+          producer:
+            # 指定了消息分区分数量
+            partitionCount: 1
+            # key 的计算规则
+            partitionKeyExtractorName: keyStrategy
+
+
 
 
