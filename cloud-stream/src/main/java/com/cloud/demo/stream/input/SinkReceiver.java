@@ -36,6 +36,4 @@ public class SinkReceiver {
     public void processOutPut(String message) {
         log.info("Output Stream Receiver:{}", message);
     }
-
-
 }

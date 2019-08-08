@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class KeyStrategy implements PartitionKeyExtractorStrategy {
 
-
     @Override
     public Object extractKey(Message<?> message) {
         return message.getPayload();
